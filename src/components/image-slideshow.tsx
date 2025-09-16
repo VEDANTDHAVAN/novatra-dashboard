@@ -12,16 +12,14 @@ import { Card, CardContent } from '@/components/ui/card';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 type ImageSlideshowProps = {
-  initialImages?: string[];
+  images?: string[];
 };
 
-export function ImageSlideshow({ initialImages }: ImageSlideshowProps) {
+export function ImageSlideshow({ images: propImages }: ImageSlideshowProps) {
   const images =
-    initialImages && initialImages.length > 0
-      ? initialImages
+    propImages && propImages.length > 0
+      ? propImages
       : PlaceHolderImages.map((img) => img.imageUrl);
-
-  const hints = PlaceHolderImages.map((img) => img.imageHint);
 
   return (
     <Card className="overflow-hidden shadow-lg">
@@ -33,22 +31,24 @@ export function ImageSlideshow({ initialImages }: ImageSlideshowProps) {
           }}
         >
           <CarouselContent>
-            {images.map((src, index) => (
+            {images.map((src, index) => {
+              const placeholder = PlaceHolderImages.find(p => p.imageUrl === src);
+              return (
               <CarouselItem key={index}>
                 <div className="relative aspect-[16/9] w-full">
                   <Image
                     src={src}
-                    alt={`Slideshow image ${index + 1}`}
+                    alt={placeholder?.description || `Slideshow image ${index + 1}`}
                     fill
                     className="object-cover"
+                    data-ai-hint={placeholder?.imageHint}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     priority={index === 0}
-                    data-ai-hint={hints[index] || 'abstract art'}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                 </div>
               </CarouselItem>
-            ))}
+            )})}
           </CarouselContent>
           <CarouselPrevious className="absolute left-4" />
           <CarouselNext className="absolute right-4" />

@@ -2,24 +2,11 @@ import { LiveBids } from '@/components/live-bids';
 import { ImageSlideshow } from '@/components/image-slideshow';
 import { CountdownTimer } from '@/components/countdown-timer';
 import { BidForm } from '@/components/bid-form';
-import { generateSlideshowImages } from '@/ai/flows/generate-slideshow-images';
 import { Gavel } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
-export default async function Home() {
-  let imageDataUris: string[] = [];
-  try {
-    const response = await generateSlideshowImages({
-      prompt:
-        'A modern and sleek auction house interior with a large digital screen displaying bids, high-end art on the walls, and a diverse group of bidders.',
-      numberOfImages: 3,
-    });
-    imageDataUris = response.imageDataUris;
-  } catch (error) {
-    console.error('Failed to generate slideshow images:', error);
-    // Fallback to placeholder images if AI generation fails
-    imageDataUris = PlaceHolderImages.map((img) => img.imageUrl);
-  }
+export default function Home() {
+  const images = PlaceHolderImages.map((img) => img.imageUrl);
 
   return (
     <div className="bg-background min-h-screen font-body text-foreground">
@@ -38,7 +25,7 @@ export default async function Home() {
           </div>
 
           <div className="lg:col-span-6">
-            <ImageSlideshow initialImages={imageDataUris} />
+            <ImageSlideshow images={images} />
           </div>
 
           <div className="lg:col-span-3 space-y-6">
