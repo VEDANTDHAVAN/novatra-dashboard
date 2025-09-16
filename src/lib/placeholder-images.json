@@ -1,3 +1,22 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "slideshow-1",
+      "description": "A vibrant, futuristic cityscape at night with neon lights and flying vehicles.",
+      "imageUrl": "https://picsum.photos/seed/slide1/1200/675",
+      "imageHint": "futuristic cityscape"
+    },
+    {
+      "id": "slideshow-2",
+      "description": "A sleek, modern auction hall with a large digital display showing bid amounts.",
+      "imageUrl": "https://picsum.photos/seed/slide2/1200/675",
+      "imageHint": "modern auction"
+    },
+    {
+      "id": "slideshow-3",
+      "description": "A close-up of a gavel hitting a sound block on a wooden desk.",
+      "imageUrl": "https://picsum.photos/seed/slide3/1200/675",
+      "imageHint": "auction gavel"
+    }
+  ]
 }
