@@ -36,8 +36,11 @@ const generateSlideshowImagesFlow = ai.defineFlow(
 
     for (let i = 0; i < input.numberOfImages; i++) {
       const {media} = await ai.generate({
-        model: 'googleai/imagen-4.0-fast-generate-001',
-        prompt: `${input.prompt} (image ${i + 1} of ${input.numberOfImages})`,
+        model: 'googleai/gemini-2.5-flash-image-preview',
+        prompt: `Generate an image for a slideshow. Prompt: ${input.prompt} (image ${i + 1} of ${input.numberOfImages})`,
+        config: {
+          responseModalities: ['IMAGE'],
+        },
       });
       if (media) {
         imageDataUris.push(media.url);
