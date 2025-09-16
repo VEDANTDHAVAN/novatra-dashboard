@@ -22,7 +22,6 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Gavel, Sparkles } from 'lucide-react';
-import { suggestBidValues } from '@/ai/flows/suggest-bid-values';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -66,25 +65,6 @@ export function BidForm() {
         title: 'Error',
         description: 'Failed to place your bid. Please try again.',
       });
-    }
-  }
-
-  async function handleSuggestValues() {
-    setIsSuggesting(true);
-    form.clearErrors();
-    try {
-      const suggestions = await suggestBidValues({});
-      form.setValue('teamName', suggestions.teamName, { shouldValidate: true });
-      form.setValue('bidAmount', suggestions.bidAmount, { shouldValidate: true });
-    } catch (error) {
-      console.error('Error suggesting values', error);
-      toast({
-        variant: 'destructive',
-        title: 'Suggestion Failed',
-        description: 'Could not get AI suggestions. Please try again.',
-      });
-    } finally {
-      setIsSuggesting(false);
     }
   }
 
@@ -136,20 +116,6 @@ export function BidForm() {
               )}
             />
             <div className="flex flex-col sm:flex-row gap-2 pt-2">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={handleSuggestValues}
-                disabled={isSuggesting}
-                className="w-full"
-              >
-                <Sparkles
-                  className={`mr-2 h-4 w-4 ${
-                    isSuggesting ? 'animate-spin' : ''
-                  }`}
-                />
-                Suggest
-              </Button>
               <Button
                 type="submit"
                 className="w-full bg-accent hover:bg-accent/90 text-accent-foreground"

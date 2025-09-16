@@ -36,6 +36,12 @@ export function ImageSlideshow({ images: propImages }: ImageSlideshowProps) {
               return (
               <CarouselItem key={index}>
                 <div className="relative aspect-[16/9] w-full">
+                  <div className="absolute top-0 left-0 w-full bg-black/50 text-white p-3 flex justify-between items-center text-sm md:text-lg font-medium z-10">
+                    <span>
+                      Slide {index + 1} / {images.length}
+                    </span>
+                    <span>{placeholder?.description || 'Untitled'}</span>
+                  </div>
                   <Image
                     src={src}
                     alt={placeholder?.description || `Slideshow image ${index + 1}`}

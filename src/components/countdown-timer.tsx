@@ -11,14 +11,27 @@ export function CountdownTimer() {
   const [timeLeft, setTimeLeft] = useState(STARTING_TIME);
   const [isActive, setIsActive] = useState(true);
 
+  //Preload sounds 
+  const tickSound = typeof Audio !== 'undefined' ? new Audio('/sounds/tick.mp3') : null;
+  const endSound = typeof Audio !== 'undefined' ? new Audio('/sounds/buzzer.mp3') : null;
+
   useEffect(() => {
     if (!isActive || timeLeft <= 0) {
-      if (timeLeft <= 0) setIsActive(false);
+      if (timeLeft <= 0) {
+        setIsActive(false);
+        endSound?.play();
+      }
       return;
     }
 
     const intervalId = setInterval(() => {
-      setTimeLeft((prevTime) => prevTime - 1);
+      setTimeLeft((prevTime) => {
+        const newTime = prevTime - 1;
+        if(newTime > 0) {
+          tickSound?.play().catch(() => {});
+        }
+        return newTime;
+      });
     }, 1000);
 
     return () => clearInterval(intervalId);
